@@ -15,5 +15,37 @@ model Usuario {
   plano_saas  String   @default("free")
   createdAt   DateTime @default(now())
 
+  propriedadesGerenciadas Propriedade[]
+
+  perfilProprietario Proprietario?
+
   @@map("usuarios")
+}
+
+model Proprietario{
+  id Int @id @default(autoincrement())
+  nome String
+  email String?
+  pix_chave String?
+
+  usuarioId Int? @unique
+  usuario Usuario? @relation(fields: [usuarioId], references: [id] )
+
+  propriedades Propriedade[]
+
+  @@map("proprietarios")
+}
+
+model Propriedade{
+    id Int @id @default(autoincrement())
+    nome String
+    endereco String
+
+    gestorId Int
+    gestor Usuario @relation(fields: [gestorId], references: [id])
+
+    proprietarioId Int 
+    proprietario Proprietario @relation(fields: [proprietarioId], references: [id])
+
+    @@map("propriedades")
 }

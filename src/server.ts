@@ -1,6 +1,8 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import { getUsers, registerUser } from './controllers/userController.js';
+import { createProperty, getProperties } from './controllers/propertyController.js';
+import { get } from 'node:http';
 
 const app = express();
 const prisma = new PrismaClient();
@@ -13,6 +15,8 @@ app.post('/register', registerUser)
 app.get('/users', getUsers)
 
 
+app.post('/properties', createProperty)
+app.get('/properties', getProperties)
 
 
 app.get('/', (req, res) => {
